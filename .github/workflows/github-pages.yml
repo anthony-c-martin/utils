@@ -27,15 +27,19 @@ jobs:
         id: pages
         uses: actions/configure-pages@v3
 
-      - name: build
-        run: |
-          mkdir -p ./dist
-          echo "<html><head><title>Ahoy there!</title></head><html>" > ./dist/index.html
+      - name: NPM Install
+        run: npm ci
+
+      - name: Test
+        run: npm run test
+
+      - name: Build
+        run: npm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
-          path: ./dist
+          path: ./build
 
   deploy:
     name: Deploy
