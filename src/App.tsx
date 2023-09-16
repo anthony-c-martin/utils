@@ -1,7 +1,7 @@
 import Container from 'react-bootstrap/Container';
 import { Nav, Navbar } from 'react-bootstrap'
 import { Outlet, Route, Routes } from 'react-router'
-import { BrowserRouter as Router } from 'react-router-dom';
+import { HashRouter as Router } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Home } from './pages/Home';
 import { QrCodePage } from './pages/QrCodePage';
