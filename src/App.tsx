@@ -24,7 +24,9 @@ function Layout() {
     <>
     <Navbar bg="dark" data-bs-theme="dark">
       <Container>
-        <Navbar.Brand href="/">Utils</Navbar.Brand>
+        <LinkContainer to="/">
+          <Navbar.Brand>Utils</Navbar.Brand>
+        </LinkContainer>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
