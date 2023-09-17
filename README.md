@@ -1,8 +1,13 @@
-# Getting Started with Create React App
+# Utils
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+I find myself trawling through random ad-infested sites whenever I want basic tools for stuff like generating a QR code, a password, formatting JSON etc.
 
-## Available Scripts
+This site exists just to create copies of random utilities I find useful and to make them easy to consume without adverts. Think of it like a personal recipe site, but for tools!
+
+## QR Code Generator
+Use this to generate quick QR codes. Example [here](https://anthony-c-martin.github.io/utils/#/qrcode?url=https://google.com).
+
+## Building / Running locally
 
 In the project directory, you can run:
 

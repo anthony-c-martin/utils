@@ -9,7 +9,7 @@ export const QrCode: FC<QrCodeProps> = ({ url }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    toCanvas(canvasRef.current, url, { version: 4, margin: 0, width: 400 });
+    toCanvas(canvasRef.current, url, { margin: 0, width: 400 });
   }, [url]);
 
   return (
