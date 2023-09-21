@@ -5,6 +5,7 @@ import { HashRouter as Router } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Home } from './pages/Home';
 import { QrCodePage } from './pages/QrCodePage';
+import { UrlEncodePage } from './pages/UrlEncodePage';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="qrcode" element={<QrCodePage />} />
+          <Route path="urlencode" element={<UrlEncodePage />} />
         </Route>
       </Routes>
     </Router>
@@ -32,6 +34,9 @@ function Layout() {
           <Nav className="me-auto">
             <LinkContainer to="/qrcode">
               <Nav.Link>QR Code Generator</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/urlencode">
+              <Nav.Link>URL encode/decode text</Nav.Link>
             </LinkContainer>
           </Nav>
         </Navbar.Collapse>
