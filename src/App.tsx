@@ -1,15 +1,12 @@
 import Container from 'react-bootstrap/Container';
 import { Nav, Navbar } from 'react-bootstrap'
-import { Outlet, Route, Routes } from 'react-router'
-import { HashRouter as Router } from 'react-router-dom';
-import { LinkContainer } from 'react-router-bootstrap';
+import { NavLink as RouterNavLink, Outlet, Route, Routes } from 'react-router'
 import { Home } from './pages/Home';
 import { QrCodePage } from './pages/QrCodePage';
 import { TextUtilsPage } from './pages/TextUtilsPage';
 
 function App() {
   return (
-    <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
@@ -17,7 +14,6 @@ function App() {
           <Route path="qrcode" element={<QrCodePage />} />
         </Route>
       </Routes>
-    </Router>
   );
 }
 
@@ -26,18 +22,18 @@ function Layout() {
     <>
     <Navbar bg="dark" data-bs-theme="dark">
       <Container>
-        <LinkContainer to="/">
-          <Navbar.Brand>Ant's Utils</Navbar.Brand>
-        </LinkContainer>
+        <Nav.Item>
+          <RouterNavLink to="/" className="navbar-brand">Ant's Utils</RouterNavLink>
+        </Nav.Item>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <LinkContainer to="/textutils">
-              <Nav.Link>Text Utils</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/qrcode">
-              <Nav.Link>QR Code</Nav.Link>
-            </LinkContainer>
+            <Nav.Item>
+              <RouterNavLink to="/textutils" className="nav-link">Text Utils</RouterNavLink>
+            </Nav.Item>
+            <Nav.Item>
+              <RouterNavLink to="/qrcode" className="nav-link">QR Code</RouterNavLink>
+            </Nav.Item>
           </Nav>
         </Navbar.Collapse>
       </Container>
