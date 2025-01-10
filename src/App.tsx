@@ -5,7 +5,7 @@ import { HashRouter as Router } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Home } from './pages/Home';
 import { QrCodePage } from './pages/QrCodePage';
-import { UrlEncodePage } from './pages/UrlEncodePage';
+import { TextUtilsPage } from './pages/TextUtilsPage';
 
 function App() {
   return (
@@ -13,8 +13,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
+          <Route path="textutils" element={<TextUtilsPage />} />
           <Route path="qrcode" element={<QrCodePage />} />
-          <Route path="urlencode" element={<UrlEncodePage />} />
         </Route>
       </Routes>
     </Router>
@@ -27,16 +27,16 @@ function Layout() {
     <Navbar bg="dark" data-bs-theme="dark">
       <Container>
         <LinkContainer to="/">
-          <Navbar.Brand>Utils</Navbar.Brand>
+          <Navbar.Brand>Ant's Utils</Navbar.Brand>
         </LinkContainer>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <LinkContainer to="/qrcode">
-              <Nav.Link>QR Code Generator</Nav.Link>
+            <LinkContainer to="/textutils">
+              <Nav.Link>Text Utils</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/urlencode">
-              <Nav.Link>URL encode/decode text</Nav.Link>
+            <LinkContainer to="/qrcode">
+              <Nav.Link>QR Code</Nav.Link>
             </LinkContainer>
           </Nav>
         </Navbar.Collapse>

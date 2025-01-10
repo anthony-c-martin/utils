@@ -6,6 +6,7 @@ import { useSearchParams } from "react-router-dom";
 export function QrCodePage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [url, setUrl] = useState('');
+  const pageLink = `${document.location.href}?url=${encodeURIComponent(url)}`;
 
   useEffect(() => {
     const searchUrl = searchParams.get('url');
@@ -28,6 +29,11 @@ export function QrCodePage() {
       <Form.Group className="mb-3">
         <Form.Label>QR Code</Form.Label>
         <QrCode url={url} />
+      </Form.Group>}
+      {url &&
+      <Form.Group className="mb-3">
+        <Form.Label>Link to this page</Form.Label>
+        <Form.Control readOnly value={pageLink} />
       </Form.Group>}
     </Form>
   );
