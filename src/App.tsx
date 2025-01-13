@@ -4,6 +4,7 @@ import { NavLink as RouterNavLink, Outlet, Route, Routes } from 'react-router'
 import { Home } from './pages/Home';
 import { QrCodePage } from './pages/QrCodePage';
 import { TextUtilsPage } from './pages/TextUtilsPage';
+import { ConversionsPage } from './pages/ConversionsPage';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="textutils" element={<TextUtilsPage />} />
+          <Route path="conversions" element={<ConversionsPage />} />
           <Route path="qrcode" element={<QrCodePage />} />
         </Route>
       </Routes>
@@ -30,6 +32,9 @@ function Layout() {
           <Nav className="me-auto">
             <Nav.Item>
               <RouterNavLink to="/textutils" className="nav-link">Text Utils</RouterNavLink>
+            </Nav.Item>
+            <Nav.Item>
+              <RouterNavLink to="/conversions" className="nav-link">Conversions</RouterNavLink>
             </Nav.Item>
             <Nav.Item>
               <RouterNavLink to="/qrcode" className="nav-link">QR Code</RouterNavLink>
