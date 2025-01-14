@@ -1,49 +1,139 @@
-import { Alert, Col, Container, Form, Row } from "react-bootstrap";
-import { useState } from "react";
+import { Alert, Col, Container, Form, InputGroup, Row } from "react-bootstrap";
+import { FC, useEffect, useState } from "react";
 
-enum WeightType {
-  Grams = "Grams",
-  Ounces = "Ounces"
+const floatRegex = /^-?\d+(?:[.,]\d*?)?$/;
+
+enum ConversionType {
+  Weight = "Weight",
+  Temperature = "Temperature",
+  //Distance,
 }
 
-const conversions = {
-  [WeightType.Grams]: 1,
-  [WeightType.Ounces]: 28.34949,
+type ConversionEntry = {
+  type: ConversionType,
+  name: string,
+  shortName: string,
+  convertTo: (input: number) => number,
+  convertFrom: (input: number) => number,
+  roundingPlaces: number,
+};
+
+const allConversions: ConversionEntry[] = [
+  {
+    type: ConversionType.Temperature,
+    name: 'Celcius',
+    shortName: 'C',
+    convertTo: x => x,
+    convertFrom: x => x,
+    roundingPlaces: 0,
+  },
+  {
+    type: ConversionType.Temperature,
+    name: 'Farenheit',
+    shortName: 'F',
+    convertTo: x => (x * 1.8) + 32,
+    convertFrom: x => (x - 32) / 1.8,
+    roundingPlaces: 0,
+  },
+  {
+    type: ConversionType.Weight,
+    name: 'Grams',
+    shortName: 'g',
+    convertTo: x => x,
+    convertFrom: x => x,
+    roundingPlaces: 0,
+  },
+  {
+    type: ConversionType.Weight,
+    name: 'Ounces',
+    shortName: 'oz',
+    convertTo: x => x / 28.3495231,
+    convertFrom: x => x * 28.3495231,
+    roundingPlaces: 2,
+  }
+]
+
+type ConversionInputProps = {
+  entry: ConversionEntry,
+  readOnly: boolean,
+  value: number,
+  onValueChange: (value?: number) => void,
+}
+
+const ConversionInput: FC<ConversionInputProps> = ({ entry, readOnly, value, onValueChange }) => {
+  const [input, setInput] = useState<string>(value.toString());
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    setInput(value.toString());
+  }, [value])
+
+  useEffect(() => {
+    if (floatRegex.test(input)) {
+      const inputVal = parseFloat(input);
+      onValueChange(inputVal);
+      setError('');
+    } else {
+      onValueChange(undefined);
+      setError(`Value '${input}' is not a valid float!`);
+    }
+  }, [entry, input, onValueChange]);
+
+  return (
+    <>
+      <InputGroup className="mb-3">
+        <Form.Control value={input} readOnly={readOnly} onChange={(e) => setInput(e.currentTarget.value)} />
+        <InputGroup.Text>{entry.shortName}</InputGroup.Text>
+      </InputGroup>
+      {error && (
+        <Alert variant="danger">{error}</Alert>
+      )}
+    </>
+  );
 };
 
 export function ConversionsPage() {
-  const [sourceType, setSourceType] = useState<WeightType>(WeightType.Grams);
-  const [destType, setDestType] = useState<WeightType>(WeightType.Ounces);
-  const [input, setInput] = useState<string>('');
-  const [output, setOutput] = useState<string>('');
-  const [error, setError] = useState('');
+  const [conversionType, setConversionType] = useState(allConversions[0].type);
+  const conversions = allConversions.filter(x => x.type === conversionType);
+  const allConversionTypes = [...new Set(allConversions.map(x => x.type))];
+  const [sourceType, setSourceType] = useState(conversions[0]);
+  const [destType, setDestType] = useState(conversions[1]);
+  const [input, setInput] = useState(0);
+  const [output, setOutput] = useState(0);
 
-  const calculate = (source: string) => {
-    try {
-      setError('');
-      setInput(source);
-      const inputVal = parseFloat(source);
-      const sourceRatio = conversions[sourceType];
-      const destRatio = conversions[destType];
-      
-      const value = (inputVal * sourceRatio) / destRatio;
-      setOutput(`${value}`);
-    } catch (e) {
-      setError(`${e}`);
-      setOutput('');
-    }
-  }
+  useEffect(() => {
+    setOutput(destType.convertTo(sourceType.convertFrom(input)));
+  }, [input, sourceType, destType]);
+
+  useEffect(() => {
+    const conversions = allConversions.filter(x => x.type === conversionType);
+    setSourceType(conversions[0]);
+    setDestType(conversions[1]);
+  }, [conversionType]);
 
   return (
     <Form>
       <Container>
         <Row>
+          <Form.Group className="mb-3">
+            <Form.Label>Conversion Type</Form.Label>
+            <Form.Select value={conversionType} onChange={(e) => setConversionType(e.currentTarget.value as ConversionType)}>
+              {allConversionTypes.map((key) => (
+                <option key={key} value={key}>{key}</option>
+              ))}
+            </Form.Select>
+            <Form.Text className="text-muted">
+              Choose the type of conversion to perform
+            </Form.Text>
+          </Form.Group>
+        </Row>
+        <Row>
           <Col>
             <Form.Group className="mb-3">
               <Form.Label>Source</Form.Label>
-              <Form.Select value={sourceType} onChange={(e) => setSourceType(WeightType[e.currentTarget.value as keyof typeof WeightType])}>
-                {Object.keys(conversions).map((key) => (
-                  <option key={key} value={key}>{key}</option>
+              <Form.Select value={sourceType.name} onChange={(e) => setSourceType(conversions.filter(x => x.name === e.currentTarget.value)[0])}>
+                {conversions.map((key) => (
+                  <option key={key.name} value={key.name}>{key.name}</option>
                 ))}
               </Form.Select>
               <Form.Text className="text-muted">
@@ -54,9 +144,9 @@ export function ConversionsPage() {
           <Col>
             <Form.Group className="mb-3">
               <Form.Label>Destination</Form.Label>
-              <Form.Select value={destType} onChange={(e) => setDestType(WeightType[e.currentTarget.value as keyof typeof WeightType])}>
-                {Object.keys(conversions).map((key) => (
-                  <option key={key} value={key}>{key}</option>
+              <Form.Select value={destType.name} onChange={(e) => setDestType(conversions.filter(x => x.name === e.currentTarget.value)[0])}>
+                {conversions.map((key) => (
+                  <option key={key.name} value={key.name}>{key.name}</option>
                 ))}
               </Form.Select>
               <Form.Text className="text-muted">
@@ -69,7 +159,11 @@ export function ConversionsPage() {
           <Col>
             <Form.Group className="mb-3">
               <Form.Label>Input</Form.Label>
-              <Form.Control value={input} onChange={(e) => calculate(e.currentTarget.value)} />
+              <ConversionInput
+                entry={sourceType}
+                readOnly={false}
+                value={input}
+                onValueChange={x => setInput(x ?? 0)} />
               <Form.Text className="text-muted">
                 Input quantity
               </Form.Text>
@@ -78,7 +172,11 @@ export function ConversionsPage() {
           <Col>
             <Form.Group className="mb-3">
               <Form.Label>Output</Form.Label>
-              <Form.Control readOnly value={output} />
+              <ConversionInput
+                entry={destType}
+                readOnly={true}
+                value={output}
+                onValueChange={() => { }} />
               <Form.Text className="text-muted">
                 Output quantity
               </Form.Text>
@@ -86,11 +184,6 @@ export function ConversionsPage() {
           </Col>
         </Row>
       </Container>
-      {error &&
-        <Form.Group className="mb-3">
-          <Alert variant="danger">{error}</Alert>
-        </Form.Group>
-      }
     </Form>
   );
 }
