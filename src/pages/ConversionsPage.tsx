@@ -6,7 +6,8 @@ const floatRegex = /^-?\d+(?:[.,]\d*?)?$/;
 enum ConversionType {
   Weight = "Weight",
   Temperature = "Temperature",
-  //Distance,
+  Volume = "Volume",
+  Distance = "Distance",
 }
 
 type ConversionEntry = {
@@ -18,39 +19,102 @@ type ConversionEntry = {
   roundingPlaces: number,
 };
 
+const mlsInFlOz = 29.57353;
+const gramsInOz = 28.3495231;
+const kmsInMile = 1.609344;
+const farenheitToCelcius = (f: number) => (f - 32) / 1.8;
+const celciusToFarenheit = (c: number) => (c * 1.8) + 32;
+const sameToSame = (x: number) => x;
+
 const allConversions: ConversionEntry[] = [
   {
     type: ConversionType.Temperature,
     name: 'Celcius',
     shortName: 'C',
-    convertTo: x => x,
-    convertFrom: x => x,
+    convertTo: sameToSame,
+    convertFrom: sameToSame,
     roundingPlaces: 0,
   },
   {
     type: ConversionType.Temperature,
     name: 'Farenheit',
     shortName: 'F',
-    convertTo: x => (x * 1.8) + 32,
-    convertFrom: x => (x - 32) / 1.8,
+    convertTo: celciusToFarenheit,
+    convertFrom: farenheitToCelcius,
     roundingPlaces: 0,
   },
   {
     type: ConversionType.Weight,
     name: 'Grams',
     shortName: 'g',
-    convertTo: x => x,
-    convertFrom: x => x,
+    convertTo: sameToSame,
+    convertFrom: sameToSame,
     roundingPlaces: 0,
   },
   {
     type: ConversionType.Weight,
     name: 'Ounces',
     shortName: 'oz',
-    convertTo: x => x / 28.3495231,
-    convertFrom: x => x * 28.3495231,
+    convertTo: x => x / gramsInOz,
+    convertFrom: x => x * gramsInOz,
     roundingPlaces: 2,
-  }
+  },
+  {
+    type: ConversionType.Volume,
+    name: 'Milliliters',
+    shortName: 'ml',
+    convertTo: sameToSame,
+    convertFrom: sameToSame,
+    roundingPlaces: 2,
+  },
+  {
+    type: ConversionType.Volume,
+    name: 'Fluid Ounces (US)',
+    shortName: 'floz',
+    convertTo: x => x / mlsInFlOz,
+    convertFrom: x => x * mlsInFlOz,
+    roundingPlaces: 2,
+  },
+  {
+    type: ConversionType.Volume,
+    name: 'Cups (US)',
+    shortName: 'cups',
+    convertTo: x => x / (mlsInFlOz * 8),
+    convertFrom: x => x * (mlsInFlOz * 8),
+    roundingPlaces: 2,
+  },
+  {
+    type: ConversionType.Volume,
+    name: 'Teaspoons (US)',
+    shortName: 'tsp',
+    convertTo: x => x / (mlsInFlOz / 6),
+    convertFrom: x => x * (mlsInFlOz / 6),
+    roundingPlaces: 2,
+  },
+  {
+    type: ConversionType.Volume,
+    name: 'Tablespoons (US)',
+    shortName: 'tbsp',
+    convertTo: x => x / (mlsInFlOz / 2),
+    convertFrom: x => x * (mlsInFlOz / 2),
+    roundingPlaces: 2,
+  },
+  {
+    type: ConversionType.Distance,
+    name: 'Kilometers',
+    shortName: 'km',
+    convertTo: sameToSame,
+    convertFrom: sameToSame,
+    roundingPlaces: 2,
+  },
+  {
+    type: ConversionType.Distance,
+    name: 'Miles',
+    shortName: 'mi',
+    convertTo: x => x / kmsInMile,
+    convertFrom: x => x * kmsInMile,
+    roundingPlaces: 2,
+  },
 ]
 
 type ConversionInputProps = {
@@ -175,7 +239,7 @@ export function ConversionsPage() {
               <ConversionInput
                 entry={destType}
                 readOnly={true}
-                value={output}
+                value={Number(output.toFixed(destType.roundingPlaces))}
                 onValueChange={() => { }} />
               <Form.Text className="text-muted">
                 Output quantity
