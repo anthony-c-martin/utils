@@ -1,6 +1,9 @@
 import { Alert, Button, Col, Container, Form, Row, Table } from "react-bootstrap";
 import { useState } from "react";
 
+const splitLines = (text: string) => text.split(/\r?\n/);
+const joinLines = (lines: string[]) => lines.join('\n');
+
 export function TextUtilsPage() {
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
@@ -16,11 +19,17 @@ export function TextUtilsPage() {
     }
   }
 
+  function updateOutputLines(input: string, update: (lines: string[]) => string[]) {
+    updateOutput(() => joinLines(update(splitLines(input))));
+  };
+
   const formatJson = () => updateOutput(() => JSON.stringify(JSON.parse(input), null, 2));
   const urlEncode = () => updateOutput(() => encodeURIComponent(input));
   const urlDecode = () => updateOutput(() => decodeURIComponent(input));
   const base64Encode = () => updateOutput(() => btoa(input));
   const base64Decode = () => updateOutput(() => atob(input));
+  const removeDuplicateLines = () => updateOutputLines(input, lines => lines.filter((line, index, lines) => lines.indexOf(line) === index));
+  const sortLines = () => updateOutputLines(input, lines => lines.sort());
   const lineCount = input.split(/\n+/).length;
   const wordCount = input.split(/\s+/).length;
   const charCount = input.length;
@@ -55,6 +64,8 @@ export function TextUtilsPage() {
         </Form.Group>
       }
       <Form.Group className="mb-3">
+        <Button className="ms-1" type="button" onClick={removeDuplicateLines}>De-Duplicate Lines</Button>
+        <Button className="ms-1" type="button" onClick={sortLines}>Sort Lines</Button>
         <Button className="ms-1" type="button" onClick={formatJson}>Pretty JSON</Button>
         <Button className="ms-1" type="button" onClick={base64Encode}>Base64 Encode</Button>
         <Button className="ms-1" type="button" onClick={base64Decode}>Base64 Decode</Button>
