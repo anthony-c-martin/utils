@@ -2,6 +2,7 @@ import { Form } from "react-bootstrap";
 import { QrCode } from "../components/qrcode";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { OutputControl } from "../components/OutputControl";
 
 export function QrCodePage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -33,7 +34,7 @@ export function QrCodePage() {
       {url &&
       <Form.Group className="mb-3">
         <Form.Label>Link to this page</Form.Label>
-        <Form.Control readOnly value={pageLink} />
+        <OutputControl value={pageLink} />
       </Form.Group>}
     </Form>
   );

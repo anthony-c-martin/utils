@@ -5,6 +5,7 @@ import { Home } from './pages/Home';
 import { QrCodePage } from './pages/QrCodePage';
 import { TextUtilsPage } from './pages/TextUtilsPage';
 import { ConversionsPage } from './pages/ConversionsPage';
+import { GenerationPage } from './pages/GenerationPage';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="textutils" element={<TextUtilsPage />} />
           <Route path="conversions" element={<ConversionsPage />} />
           <Route path="qrcode" element={<QrCodePage />} />
+          <Route path="generation" element={<GenerationPage />} />
         </Route>
       </Routes>
   );
@@ -38,6 +40,9 @@ function Layout() {
             </Nav.Item>
             <Nav.Item>
               <RouterNavLink to="/qrcode" className="nav-link">QR Code</RouterNavLink>
+            </Nav.Item>
+            <Nav.Item>
+              <RouterNavLink to="/generation" className="nav-link">Generation</RouterNavLink>
             </Nav.Item>
           </Nav>
         </Navbar.Collapse>
