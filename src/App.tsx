@@ -3,6 +3,7 @@ import { Nav, Navbar } from 'react-bootstrap'
 import { NavLink as RouterNavLink, Outlet, Route, Routes } from 'react-router'
 import { Home } from './pages/Home';
 import { QrCodePage } from './pages/QrCodePage';
+import { QuickSharePage } from './pages/QuickSharePage';
 import { TextUtilsPage } from './pages/TextUtilsPage';
 import { ConversionsPage } from './pages/ConversionsPage';
 import { GenerationPage } from './pages/GenerationPage';
@@ -15,6 +16,7 @@ function App() {
           <Route path="textutils" element={<TextUtilsPage />} />
           <Route path="conversions" element={<ConversionsPage />} />
           <Route path="qrcode" element={<QrCodePage />} />
+          <Route path="quickshare" element={<QuickSharePage />} />
           <Route path="generation" element={<GenerationPage />} />
         </Route>
       </Routes>
@@ -40,6 +42,9 @@ function Layout() {
             </Nav.Item>
             <Nav.Item>
               <RouterNavLink to="/qrcode" className="nav-link">QR Code</RouterNavLink>
+            </Nav.Item>
+            <Nav.Item>
+              <RouterNavLink to="/quickshare" className="nav-link">Quick Share</RouterNavLink>
             </Nav.Item>
             <Nav.Item>
               <RouterNavLink to="/generation" className="nav-link">Generation</RouterNavLink>
