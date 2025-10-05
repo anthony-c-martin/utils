@@ -22,7 +22,7 @@
     "yaml": "^2.8.1"
   },
   "devDependencies": {
-    "@eslint/js": "^9.35.0",
+    "@eslint/js": "^9.37.0",
     "@types/pako": "^2.0.4",
     "@types/qrcode": "^1.5.5",
     "@types/react": "^18.3.18",
