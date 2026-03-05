@@ -33,6 +33,15 @@ export function TextUtilsPage() {
   const sortLines = () => updateOutputLines(input, lines => lines.sort());
   const yamlToJson = () => updateOutput(() => JSON.stringify(yaml.parse(input), null, 2));
   const jsonToYaml = () => updateOutput(() => yaml.stringify(JSON.parse(input), null, 2));
+  const decodeJwt = () => updateOutput(() => {
+    const parts = input.trim().split('.');
+    if (parts.length !== 3) throw new Error('Invalid JWT: expected 3 parts separated by "."');
+    const decodeBase64Url = (s: string) => atob(s.replace(/-/g, '+').replace(/_/g, '/').padEnd(s.length + (4 - s.length % 4) % 4, '='));
+    const header = JSON.parse(decodeBase64Url(parts[0]));
+    const payload = JSON.parse(decodeBase64Url(parts[1]));
+    return JSON.stringify({ header, payload }, null, 2);
+  });
+
   const lineCount = input.split(/\n+/).length;
   const wordCount = input.split(/\s+/).length;
   const charCount = input.length;
@@ -76,6 +85,7 @@ export function TextUtilsPage() {
         <Button className="ms-1" type="button" onClick={urlDecode}>URL Decode</Button>
         <Button className="ms-1" type="button" onClick={yamlToJson}>YAML to JSON</Button>
         <Button className="ms-1" type="button" onClick={jsonToYaml}>JSON to YAML</Button>
+        <Button className="ms-1" type="button" onClick={decodeJwt}>Decode JWT</Button>
       </Form.Group>
       <Form.Group className="mb-3">
         <Table>
