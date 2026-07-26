@@ -7,13 +7,14 @@ import { deflate, inflate } from "pako";
 
 export function QuickSharePage() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState(() => {
+    const searchData = searchParams.get('data');
+    return searchData ? decode(searchData) : '';
+  });
   const pageLink = `${document.location.href}?data=${encodeURIComponent(encode(input))}`;
 
   useEffect(() => {
-    const searchData = searchParams.get('data');
-    if (searchData) {
-      setInput(decode(searchData));
+    if (searchParams.get('data')) {
       setSearchParams({});
     }
   }, [searchParams, setSearchParams]);

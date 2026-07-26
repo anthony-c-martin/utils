@@ -7,13 +7,11 @@ import { parseMatterIdentifier, toManualPairingCode, describeProduct, describeVe
 
 export function MatterPage() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [identifier, setIdentifier] = useState('');
+  const [identifier, setIdentifier] = useState(() => searchParams.get('id') ?? '');
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    const searchId = searchParams.get('id');
-    if (searchId) {
-      setIdentifier(searchId);
+    if (searchParams.get('id')) {
       setSearchParams({});
     }
   }, [searchParams, setSearchParams]);

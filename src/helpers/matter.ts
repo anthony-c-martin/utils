@@ -10,12 +10,14 @@ const BASE38_ALPHABET = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-.';
 // Number of Base-38 characters used to encode a chunk of 1, 2 or 3 bytes.
 const CHARS_FOR_BYTES = [0, 2, 4, 5];
 
-export enum CommissioningFlow {
-  Standard = 'Standard',
-  UserIntent = 'User-intent',
-  Custom = 'Custom',
-  Reserved = 'Reserved',
-}
+export const CommissioningFlow = {
+  Standard: 'Standard',
+  UserIntent: 'User-intent',
+  Custom: 'Custom',
+  Reserved: 'Reserved',
+} as const;
+
+export type CommissioningFlow = (typeof CommissioningFlow)[keyof typeof CommissioningFlow];
 
 export type DiscoveryCapabilities = {
   softAp: boolean;

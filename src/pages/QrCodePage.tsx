@@ -6,13 +6,11 @@ import { OutputControl } from "../components/OutputControl";
 
 export function QrCodePage() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [url, setUrl] = useState('');
+  const [url, setUrl] = useState(() => searchParams.get('url') ?? '');
   const pageLink = `${document.location.href}?url=${encodeURIComponent(url)}`;
 
   useEffect(() => {
-    const searchUrl = searchParams.get('url');
-    if (searchUrl) {
-      setUrl(searchUrl);
+    if (searchParams.get('url')) {
       setSearchParams({});
     }
   }, [searchParams, setSearchParams]);

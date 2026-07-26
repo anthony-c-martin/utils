@@ -2,12 +2,13 @@
   "name": "utils",
   "private": true,
   "version": "0.1.0",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "echo 'no tests :('"
+    "test": "node --test 'test/**/*.test.ts'"
   },
   "dependencies": {
     "bootstrap": "^5.3.8",
@@ -23,6 +24,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
+    "@types/node": "^26.1.1",
     "@types/pako": "^2.0.4",
     "@types/qrcode": "^1.5.6",
     "@types/react": "^18.3.18",
@@ -36,6 +38,7 @@
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.56.1",
     "vite": "^7.3.1",
-    "vite-plugin-pwa": "^1.2.0"
+    "vite-plugin-pwa": "^1.2.0",
+    "vitest": "^4.1.10"
   }
 }
