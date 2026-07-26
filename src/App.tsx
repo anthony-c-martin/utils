@@ -36,17 +36,6 @@ function Layout() {
         <Nav.Item>
           <RouterNavLink to="/" className="navbar-brand">Ant's Utils</RouterNavLink>
         </Nav.Item>
-        <Button
-          variant="outline-light"
-          size="sm"
-          href="https://github.com/anthony-c-martin/utils"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="GitHub"
-          className="d-inline-flex align-items-center me-auto"
-        >
-          <Github size={20} />
-        </Button>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
@@ -72,6 +61,17 @@ function Layout() {
               <RouterNavLink to="/matter" className="nav-link">Matter</RouterNavLink>
             </Nav.Item>
           </Nav>
+          <Button
+            variant="outline-light"
+            size="sm"
+            href="https://github.com/anthony-c-martin/utils"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub"
+            className="d-none d-lg-inline-flex align-items-center ms-auto"
+          >
+            <Github size={20} />
+          </Button>
         </Navbar.Collapse>
       </Container>
     </Navbar>

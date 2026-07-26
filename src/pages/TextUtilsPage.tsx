@@ -1,4 +1,4 @@
-import { Alert, Button, Col, Container, Form, Row, Table } from "react-bootstrap";
+import { Alert, Button, ButtonGroup, Col, Container, Form, Row, Table } from "react-bootstrap";
 import { useState } from "react";
 import * as yaml from "yaml";
 
@@ -76,16 +76,29 @@ export function TextUtilsPage() {
         </Form.Group>
       }
       <Form.Group className="mb-3">
-        <Button className="ms-1" type="button" onClick={removeDuplicateLines}>De-Duplicate Lines</Button>
-        <Button className="ms-1" type="button" onClick={sortLines}>Sort Lines</Button>
-        <Button className="ms-1" type="button" onClick={formatJson}>Pretty JSON</Button>
-        <Button className="ms-1" type="button" onClick={base64Encode}>Base64 Encode</Button>
-        <Button className="ms-1" type="button" onClick={base64Decode}>Base64 Decode</Button>
-        <Button className="ms-1" type="button" onClick={urlEncode}>URL Encode</Button>
-        <Button className="ms-1" type="button" onClick={urlDecode}>URL Decode</Button>
-        <Button className="ms-1" type="button" onClick={yamlToJson}>YAML to JSON</Button>
-        <Button className="ms-1" type="button" onClick={jsonToYaml}>JSON to YAML</Button>
-        <Button className="ms-1" type="button" onClick={decodeJwt}>Decode JWT</Button>
+        <Form.Label className="d-block mb-1 small text-muted">Lines</Form.Label>
+        <ButtonGroup aria-label="Lines">
+          <Button type="button" onClick={removeDuplicateLines}>De-Duplicate Lines</Button>
+          <Button type="button" onClick={sortLines}>Sort Lines</Button>
+        </ButtonGroup>
+      </Form.Group>
+      <Form.Group className="mb-3">
+        <Form.Label className="d-block mb-1 small text-muted">Encoding</Form.Label>
+        <ButtonGroup aria-label="Encoding">
+          <Button type="button" onClick={base64Encode}>Base64 Encode</Button>
+          <Button type="button" onClick={base64Decode}>Base64 Decode</Button>
+          <Button type="button" onClick={urlEncode}>URL Encode</Button>
+          <Button type="button" onClick={urlDecode}>URL Decode</Button>
+        </ButtonGroup>
+      </Form.Group>
+      <Form.Group className="mb-3">
+        <Form.Label className="d-block mb-1 small text-muted">Format &amp; Convert</Form.Label>
+        <ButtonGroup aria-label="Format & Convert">
+          <Button type="button" onClick={formatJson}>Pretty JSON</Button>
+          <Button type="button" onClick={yamlToJson}>YAML to JSON</Button>
+          <Button type="button" onClick={jsonToYaml}>JSON to YAML</Button>
+          <Button type="button" onClick={decodeJwt}>Decode JWT</Button>
+        </ButtonGroup>
       </Form.Group>
       <Form.Group className="mb-3">
         <Table>
