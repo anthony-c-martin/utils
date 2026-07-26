@@ -7,6 +7,7 @@ import { QuickSharePage } from './pages/QuickSharePage';
 import { TextUtilsPage } from './pages/TextUtilsPage';
 import { ConversionsPage } from './pages/ConversionsPage';
 import { GenerationPage } from './pages/GenerationPage';
+import { MatterPage } from './pages/MatterPage';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="qrcode" element={<QrCodePage />} />
           <Route path="quickshare" element={<QuickSharePage />} />
           <Route path="generation" element={<GenerationPage />} />
+          <Route path="matter" element={<MatterPage />} />
         </Route>
       </Routes>
   );
@@ -48,6 +50,9 @@ function Layout() {
             </Nav.Item>
             <Nav.Item>
               <RouterNavLink to="/generation" className="nav-link">Generation</RouterNavLink>
+            </Nav.Item>
+            <Nav.Item>
+              <RouterNavLink to="/matter" className="nav-link">Matter</RouterNavLink>
             </Nav.Item>
           </Nav>
         </Navbar.Collapse>
