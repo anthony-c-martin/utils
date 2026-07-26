@@ -17,11 +17,17 @@ jobs:
       - name: NPM Install
         run: npm ci
 
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps chromium
+
       - name: Lint
         run: npm run lint
 
       - name: Test
         run: npm run test
+
+      - name: Test - E2E
+        run: npm run test:e2e
 
       - name: Build
         run: npm run build

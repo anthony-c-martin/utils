@@ -12,6 +12,18 @@ dist
 dist-ssr
 *.local
 
+# Playwright test artifacts and traces
+test-results/
+
+# Playwright HTML reports
+playwright-report/
+blob-report/
+
+# Playwright cache (downloaded browsers, if installed locally)
+.navigate/
+.local-browsers/
+playwright/.cache/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
